@@ -364,7 +364,11 @@ render = (text, canvas) ->
   figures = parseASCIIArt text
 
   [canvas.width, canvas.height] = findDimensions figures
-  
+  canvas.style.fontFamily = "'Open Sans', sans-serif"
+  canvas.style.fontSize = "14px"
+  canvas.style.fontWeight = "normal"
+  canvas.style.lineHeight = "1.2rem"
+
   ctx = new ShakyCanvas canvas
   figure.draw(ctx) for figure in figures
  
