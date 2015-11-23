@@ -402,6 +402,10 @@
     var ctx, figure, figures, j, len, ref, results;
     figures = parseASCIIArt(text);
     ref = findDimensions(figures), canvas.width = ref[0], canvas.height = ref[1];
+    canvas.style.fontFamily = "'Open Sans', sans-serif";
+    canvas.style.fontSize = "14px";
+    canvas.style.fontWeight = "normal";
+    canvas.style.lineHeight = "1.2rem";
     ctx = new ShakyCanvas(canvas);
     results = [];
     for (j = 0, len = figures.length; j < len; j++) {
