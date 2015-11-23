@@ -3,24 +3,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script type="text/javascript">
-      WebFontConfig = {
-        google: { families: [ 'Gloria Hallelujah' ] },
-        active: function () {
-          FONTS_ACTIVE = true;
-          if (typeof drawDiagram === 'function') drawDiagram();
-        }
-      };
-      (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-      })();
-    </script>
   </head>
   <body>
     <button id="save">save as</button><input type="text" id="name" value="image.png"/><br/>
@@ -74,29 +56,33 @@
     
     <script src="shaky.js"></script>
     <script>
-        var $ = function(id) { return document.getElementById(id); }
-        // Draw a diagram from the ascii art contained in the #textarea.
-        var drawDiagram = function() {
-          window.shaky.render($('textarea').value, $('canvas'));
-        };
+      var $ = function(id) { return document.getElementById(id); }
+      // Draw a diagram from the ascii art contained in the #textarea.
+      var drawDiagram = function() {
+        window.Shaky.render($('textarea').value, $('canvas'));
+      };
 
-        // start main code
-        var textarea = $('textarea');
-        textarea.addEventListener('change', drawDiagram);
-        textarea.addEventListener('keyup',  drawDiagram);
+      // start main code
+      var textarea = $('textarea');
+      textarea.addEventListener('change', drawDiagram);
+      textarea.addEventListener('keyup',  drawDiagram);
 
-        $('save').addEventListener('click', function() {
-          a = document.createElement('a');
-          a.href = $('canvas').toDataURL('image/png');
-          a.download = $('name').value;
-          document.body.appendChild(a);
-          setTimeout(function() { document.body.removeChild(a); }, 1000);
-          try {
-            a.click();
-          } catch (e) {
-            alert("couldn't click");
-          }
-        });
+      $('save').addEventListener('click', function() {
+        a = document.createElement('a');
+        a.href = $('canvas').toDataURL('image/png');
+        a.download = $('name').value;
+        document.body.appendChild(a);
+        setTimeout(function() { document.body.removeChild(a); }, 1000);
+        try {
+          a.click();
+        } catch (e) {
+          alert("couldn't click");
+        }
+      });
+      
+      window.Shaky.loadFont(function() {
+        drawDiagram();
+      });
     </script>
   </body>
 </html>

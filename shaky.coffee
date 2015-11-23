@@ -16,6 +16,25 @@
 
 FONT = "20pt 'Gloria Hallelujah'"
 
+isFontLoaded = false
+loadFont = (callback) ->
+  if isFontLoaded
+    callback()
+  else
+    window.WebFontConfig = {
+      google: { families: [ 'Gloria Hallelujah' ] },
+      active: ->
+        isFontLoaded = true
+        callback()
+    }
+    wf = document.createElement('script')
+    wf.src = (if 'https:' == document.location.protocol then 'https' else 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'
+    wf.type = 'text/javascript'
+    wf.async = 'true'
+    s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(wf, s)
+
 # ShakyCanvas provides a way of drawing shaky lines on a normal
 # HTML5 canvas element.
 class ShakyCanvas
@@ -377,10 +396,11 @@ shaky = {
   ShakyCanvas: ShakyCanvas,
   findDimensions: findDimensions,
   render: render,
+  loadFont: loadFont,
 }
 
 if typeof module == "undefined"
-  window.shaky = shaky
+  window.Shaky = shaky
 else
   module.exports = shaky
 
