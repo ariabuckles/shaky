@@ -367,11 +367,16 @@ render = (text, canvas) ->
   
   ctx = new ShakyCanvas canvas
   figure.draw(ctx) for figure in figures
-
-window.shaky = {
+ 
+shaky = {
   parse: parseASCIIArt,
   ShakyCanvas: ShakyCanvas,
   findDimensions: findDimensions,
   render: render,
 }
+
+if typeof module == "undefined"
+  window.shaky = shaky
+else
+  module.exports = shaky
 
