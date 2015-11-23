@@ -74,7 +74,31 @@
     </textarea>
     <canvas id="canvas" width="640" height="480"></canvas>
     
-    <script type="text/coffeescript" src="shaky.coffee"></script>
-    <script src="coffee-script.js"></script>
+    <script src="shaky.js"></script>
+    <script>
+        var $ = function(id) { return document.getElementById(id); }
+        // Draw a diagram from the ascii art contained in the #textarea.
+        var drawDiagram = function() {
+          window.shaky.render($('textarea').value, $('canvas'));
+        };
+
+        // start main code
+        var textarea = $('textarea');
+        textarea.addEventListener('change', drawDiagram);
+        textarea.addEventListener('keyup',  drawDiagram);
+
+        $('save').addEventListener('click', function() {
+          a = document.createElement('a');
+          a.href = $('canvas').toDataURL('image/png');
+          a.download = $('name').value;
+          document.body.appendChild(a);
+          setTimeout(function() { document.body.removeChild(a); }, 1000);
+          try {
+            a.click();
+          } catch (e) {
+            alert("couldn't click");
+          }
+        });
+    </script>
   </body>
 </html>

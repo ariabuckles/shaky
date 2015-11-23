@@ -350,13 +350,7 @@ parseASCIIArt = (string) ->
 
   figures
 
-doc = document
-$ = (id) -> doc.getElementById id
-
-# Draw a diagram from the ascii art contained in the #textarea.
-window.drawDiagram = ->
-  figures = parseASCIIArt $('textarea').value
-
+findDimensions = (figures) ->
   # Compute required canvas size.
   width = 0
   height = 0
@@ -364,30 +358,20 @@ window.drawDiagram = ->
     if figure.constructor.name is 'Line'
       width = Math.max width, X(figure.x1 + 1)
       height = Math.max height, Y(figure.y1 + 1)
-  
-  canvas = $ 'canvas'
+  [width, height]
 
-  canvas.width = width
-  canvas.height = height
+render = (text, canvas) ->
+  figures = parseASCIIArt text
+
+  [canvas.width, canvas.height] = findDimensions figures
   
   ctx = new ShakyCanvas canvas
   figure.draw(ctx) for figure in figures
 
-# start main code
-textarea = $('textarea')
-textarea.addEventListener 'change', drawDiagram
-textarea.addEventListener 'keyup',  drawDiagram
+window.shaky = {
+  parse: parseASCIIArt,
+  ShakyCanvas: ShakyCanvas,
+  findDimensions: findDimensions,
+  render: render,
+}
 
-$('save').addEventListener 'click', ->
-  a = doc.createElement 'a'
-  a.href = $('canvas').toDataURL('image/png')
-  a.download = $('name').value
-  doc.body.appendChild a
-  setTimeout (-> doc.body.removeChild a), 1000
-  try
-    a.click()
-  catch e
-    alert "couldn't click"
-    #a.$dom_dispatchEvent(new html.Event("click"));
-
-drawDiagram() if FONTS_ACTIVE?
