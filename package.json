@@ -1,0 +1,26 @@
+{
+  "name": "shaky",
+  "version": "0.0.0",
+  "description": "Shaky diagrams",
+  "main": "shaky.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariabuckles/shaky.git"
+  },
+  "keywords": [
+    "shaky",
+    "diagram"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ariabuckles/shaky/issues"
+  },
+  "homepage": "https://github.com/ariabuckles/shaky#readme",
+  "dependencies": {
+    "coffee-script": "^1.10.0"
+  }
+}
